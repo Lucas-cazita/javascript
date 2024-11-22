@@ -3,9 +3,9 @@ document.body.addEventListener('keyup', (event) => {
 })
 
 document.querySelector('.composer button').addEventListener('click', () => {
-    let song = document.querySelector('#input').value.toLowerCase()
+    let song = document.querySelector('#input').value
 
-    song = song.split('')
+    song = song.toLowerCase().split('')
     playComposion(song)
 })
 
