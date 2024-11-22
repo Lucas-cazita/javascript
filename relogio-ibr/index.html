@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relógio Analógico</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <!--Botão de expandir tela-->
+    <div class="container">
+        <button id="fullscreen-btn">
+            <span id="fullscreen-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 3 3 3 3 9"></polyline>
+                <polyline points="15 3 21 3 21 9"></polyline>
+                <polyline points="9 21 3 21 3 15"></polyline>
+                <polyline points="15 21 21 21 21 15"></polyline>
+                </svg>
+            </span>
+        </button>
+    </div>
+
+    <!--Menu lateral-->
+    <div class="side-menu">
+        <button class="side-btn">></button>
+        <h2>Escolha as progrmações que teremos hoje</h2>
+        <div class="setProg">
+            <input type="text"  class="prog" id="prog1" value="Abertura">
+            <input type="number" class="temp" id="temp1" value="5">
+            <button class="addProg">+</button>
+            <button class="delProg">-</button>
+        </div>
+        <div class="setProg">
+            <input type="text"  class="prog" id="prog2" value="Louvor">
+            <input type="number" class="temp" id="temp2" value="30">
+            <button class="addProg">+</button>
+            <button class="delProg">-</button>
+        </div>
+        <div class="setProg">
+            <input type="text"  class="prog" id="prog3" value="Avisos">
+            <input type="number" class="temp" id="temp3" value="20">
+            <button class="addProg">+</button>
+            <button class="delProg">-</button>
+        </div>
+        <div class="setProg">
+            <input type="text"  class="prog" id="prog4" value="Visitantes">
+            <input type="number" class="temp" id="temp4" value="10">
+            <button class="addProg">+</button>
+            <button class="delProg">-</button>
+        </div>
+        <div class="setProg">
+            <input type="text"  class="prog" id="prog5" value="Oferta">
+            <input type="number" class="temp" id="temp5" value="15">
+            <button class="addProg">+</button>
+            <button class="delProg">-</button>
+        </div>
+        <div class="setProg">
+            <input type="text"  class="prog" id="prog6" value="Pregação">
+            <input type="number" class="temp" id="temp6" value="45">
+            <button class="addProg">+</button>
+            <button class="delProg">-</button>
+        </div>
+        <div class="setProg">
+            <input type="text"  class="prog" id="prog7" value="Oração Final">
+            <input type="number" class="temp" id="temp7" value="5">
+            <button class="addProg">+</button>
+            <button class="delProg">-</button>
+        </div>
+
+        <div class="controls">
+            <button class="save" onclick=save()>Salvar</button>
+            <button class="start" onclick="start()">Iniciar</button>
+            <button class="stop">Parar</button>
+
+        </div>
+
+    </div>
+
+    <!--Progrmação atual-->
+    <div class="header">
+        <h1>...</h1>
+        <div class="next">/ ...</div>
+    </div>
+
+    <div class="contdown">00:00</div>
+
+    <div class="bar-area"><div class="bar-progress"></div></div>
+
+    <div class="controls">
+        <button class="start" onclick="start()">Iniciar</button>
+        <button class="stop">Parar</button>
+    </div>
+
+    
+    <div class="digital">--:--:--</div>
+
+    <footer>Criado por Lucas Cazita</footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

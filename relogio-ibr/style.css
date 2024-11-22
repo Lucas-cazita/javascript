@@ -1,0 +1,158 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    min-height: 100vh;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #000;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.container {
+    width: 100%;
+    display: flex;
+    justify-content: end;
+}
+
+#fullscreen-btn {
+    background-color: #000;
+    color: #FFF;
+    border: 0;
+    margin-right: 20px;
+}
+
+.side-menu {
+    position: absolute;
+    background-color: #ccc;
+    min-height: 90vh;
+    min-width: 40vw;
+    top: 5%;
+    left: -100%;
+    right: 100%;
+    transition: 0.5s;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.side-btn {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    color: #fff;
+    background-color: #000;
+    border: 1px solid #fff;
+    border-left: 0;
+    padding: 5px 10px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.side-btn:hover {
+    background-color: #6b6b6b44;
+}
+
+.side-menu h2 {
+    text-align: center;
+    padding: 20px 0px;
+}
+
+.side-menu .setProg {
+    padding: 10px 20px;
+}
+
+.side-menu .prog,
+.side-menu .temp {
+    margin-left: 20px;
+    font-size: 15px;
+}
+
+.side-menu .prog {
+    width: 250px;
+    padding: 5px 10px;
+}
+
+.side-menu .temp {
+    width: 70px;
+    text-align: center;
+    padding: 5px;
+}
+
+.side-menu button:not(.side-btn){
+    padding: 5px 10px;
+    font-size: 15px;
+    font-weight: bold;
+    margin-left: 20px;
+    cursor: pointer;
+}
+
+.save,
+.start,
+.stop {
+    width: 100px;
+    margin-top: 50px;
+    cursor: pointer;
+}
+
+.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+}
+
+h1 {
+    color: #FFF;
+    margin-bottom: 20px;
+    font-size: 80px;
+    font-weight: 400;
+    display: inline-block;
+    flex: 1;
+    text-align: center;
+    padding-left: 250px;
+}
+
+.next{
+    display: inline-block;
+    color: #FFF;
+    width: 250px;
+    text-align: right;
+    font-size: 60px;
+}
+
+.contdown {
+    color: white;
+    font-size: 200px;
+    font-weight: bold;
+}
+
+.bar-area {
+    height: 100px;
+    width: 90%;
+    border: 3px solid #FFF;
+}
+
+.bar-progress {
+    width: 20%;
+    height: 100%;
+    background-color: green;
+}
+
+
+.digital {
+    color: #FFF;
+    font-size: 60px;
+    margin-top: 20px;
+}
+
+footer {
+    margin-top: 20px;
+    color: #FFF;
+    font-size: 13px;
+}
