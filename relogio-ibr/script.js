@@ -22,30 +22,150 @@ setInterval(() => {
 
 setHour()
 
+
+
+// Adiciona progamação a listagem
+function add() {
+    // Busca todos os checkboxes na página
+    const checkboxes = document.querySelectorAll('.setProg input[type="checkbox"]');
+
+    // Encontra o checkbox que está selecionado
+    let selectedCheckbox = [];
+    checkboxes.forEach((checkbox) => {
+        if (checkbox.checked) {
+            selectedCheckbox.push(checkbox);
+        }
+    });
+
+    // Verifica se algum checkbox foi selecionado
+    if (selectedCheckbox.length === 0) {
+        alert('Por favor, selecione um item antes de adicionar.');
+        return;
+    }
+
+    selectSetProg('add', selectedCheckbox)
+
+}
+// Remove programação da listagem
+function del() {
+    // Busca todos os checkboxes na página
+    const checkboxes = document.querySelectorAll('.setProg input[type="checkbox"]');
+
+    // Encontra os checkboxs que estão selecionados
+    let selectedCheckbox = [];
+    checkboxes.forEach((checkbox) => {
+        if (checkbox.checked) {
+            selectedCheckbox.push(checkbox);
+        }
+    });
+
+    // Verifica se algum checkbox foi selecionado
+    if (selectedCheckbox.length === 0) {
+        alert('Por favor, selecione um item antes de remover.');
+        return;
+    }
+
+    selectSetProg('del', selectedCheckbox)
+
+}
+// Seleciona as setProg que estão a baixo da setProg informada
+function selectSetProg(action, selectedCheckbox) {
+    let selectedsSetProg = []
+    for (let i of selectedCheckbox) {
+        selectedsSetProg.push(i.closest('.setProg'))
+    } 
+    for (let setProg of selectedsSetProg) {
+        alterIndex(action, setProg)
+        alterElementsList(action, setProg)
+    }
+
+}
+
+function alterIndex(action, selectedSetProg) {
+    // Seleciona todos os elementos `.setProg`
+    const allSetProgs = document.querySelectorAll('.setProg');
+
+    // Filtra aqueles que vêm depois da `selectedSetProg`
+    let belowSetProgs = [];
+    let found = false;
+
+    allSetProgs.forEach(setProg => {
+        if (setProg === selectedSetProg) {
+            found = true; // Começa a coletar os próximos elementos
+        } else if (found) {
+            belowSetProgs.push(setProg);
+        }
+    });
+
+    for (let setProgElement of belowSetProgs) {
+        const inputs = setProgElement.querySelectorAll('input');
+        let index = 0
+
+        inputs.forEach(input => {
+            // Verifica o tipo do input para personalizar o ID
+            if (action === 'add') {
+                if (input.type === 'checkbox') {
+                    index = input.id.charAt(input.id.length -1)
+                    input.id = `icheck${Number(index)+1}`;
+                } else if (input.type === 'text') {
+                    index = input.id.charAt(input.id.length -1)
+                    input.id = `prog${Number(index)+1}`;
+                } else if (input.type === 'number') {
+                    index = input.id.charAt(input.id.length -1)
+                    input.id = `temp${Number(index)+1}`;
+                }
+            } else if (action === 'del') {
+                if (input.type === 'checkbox') {
+                    index = input.id.charAt(input.id.length -1)
+                    input.id = `icheck${Number(index)-1}`;
+                } else if (input.type === 'text') {
+                    index = input.id.charAt(input.id.length -1)
+                    input.id = `prog${Number(index)-1}`;
+                } else if (input.type === 'number') {
+                    index = input.id.charAt(input.id.length -1)
+                    input.id = `temp${Number(index)-1}`;
+                }
+            }
+           
+        })
+    }
+}
+
+// Aletra a exibição das programações
+function alterElementsList(action, setProg) {
+    if (action === 'add') {
+        let newIndex = Number(setProg.getElementsByTagName('input')[0].id.charAt(6)) + 1
+
+        // Cria o novo elemento setProg com os IDs atualizados
+        const newSetProg = document.createElement('div');
+        newSetProg.classList.add('setProg');
+        newSetProg.innerHTML = `
+            <input type="checkbox" name="check${newIndex}" id="icheck${newIndex}">
+            <input type="text" class="prog" id="prog${newIndex}" value="Nova Programação">
+            <input type="number" class="temp" id="temp${newIndex}" value="15">
+        `;
+
+        // Insere o novo elemento logo após o elemento selecionado
+        setProg.insertAdjacentElement('afterend', newSetProg);
+    } else if (action === 'del') {
+        setProg.remove()
+    } else {
+        console.log('Impossível identificar operação')
+    }
+}
 // Salvar Progamações
-let allProgs;
+let allProgs = [[], []];
 function save() {
-    let prog1 = document.querySelector('#prog1').value
-    let prog2 = document.querySelector('#prog2').value
-    let prog3 = document.querySelector('#prog3').value
-    let prog4 = document.querySelector('#prog4').value
-    let prog5 = document.querySelector('#prog5').value
-    let prog6 = document.querySelector('#prog6').value
-    let prog7 = document.querySelector('#prog7').value
+    const allSetProgs = document.getElementsByClassName('setProg')
+    let index = 1
 
-    let progs = [prog1, prog2, prog3, prog4, prog5, prog6, prog7]
-
-    let temp1 = document.querySelector('#temp1').value
-    let temp2 = document.querySelector('#temp2').value
-    let temp3 = document.querySelector('#temp3').value
-    let temp4 = document.querySelector('#temp4').value
-    let temp5 = document.querySelector('#temp5').value
-    let temp6 = document.querySelector('#temp6').value
-    let temp7 = document.querySelector('#temp7').value
-
-    let temps = [temp1, temp2, temp3, temp4, temp5, temp6, temp7]
-
-   allProgs = [progs, temps]
+    allProgs= [[], []]
+    for (let prog of allSetProgs) {
+        let newProg = prog.querySelector('.prog').value  
+        let newTemp = prog.querySelector('.temp').value
+        allProgs[0].push(newProg)
+        allProgs[1].push(newTemp)
+    } 
 }
 
 save()
@@ -53,6 +173,8 @@ let runCount = true
 const timers = { interval: null };
 // Inicia a Progamação
 function start() {
+    openSideMenu()
+    resizeScreen()
     const h1 = document.querySelector('h1')
     const next = document.querySelector('.next')
 
@@ -70,6 +192,7 @@ function start() {
                 next.textContent = 'FIM'
             }
 
+            // const tempoAtual = 2.1 * 60
             const tempoAtual = allProgs[1][index] * 60
 
             startContdown(tempoAtual)
@@ -120,15 +243,21 @@ function startContdown(durationInSeconds) {
 
              // Quando o tempo for menor ou igual a 2 minutos, piscar a barra e os números
             if (timeRemaining <= 120) {
-                progressBar.classList.add('blink-bar');
-                countdown.classList.add('blink-text');
+                countdown.style.color = 'red';
+                
+                if (timeRemaining <= 30) {
+                    progressBar.classList.add('blink-bar');
+                    countdown.classList.add('blink-text');
+                }
+            } else {
+                progressBar.classList.remove('blink-bar');
+                countdown.classList.remove('blink-text');
+                countdown.style.color = 'white';
             }
 
             timeRemaining--;
         } else {
             countdown.textContent = '00:00'
-            progressBar.classList.remove('blink-bar');
-            countdown.classList.remove('blink-text');
             clearInterval(timers.interval)
             stop()
         }
@@ -146,10 +275,14 @@ function stop() {
     const next = document.querySelector('.next')
     const countdown = document.querySelector('.contdown')
     
-    h1.textContent = '...'
-    next.textContent = '...'
+    h1.textContent = ''
+    next.textContent = ''
     progressBar.style.width = 0
     countdown.textContent = '00:00'
+    progressBar.classList.remove('blink-bar');
+    countdown.classList.remove('blink-text');
+    countdown.style.color = 'white';
+
 
 
     runCount = false
@@ -160,9 +293,9 @@ let btnSideMenu = document.querySelector('.side-btn')
 btnSideMenu.addEventListener('click', openSideMenu)
 
 let posSideMenu
-function openSideMenu() {
+function openSideMenu(open=false) {
     let sideMenu = document.querySelector('.side-menu')
-    if (!posSideMenu) {
+    if (!posSideMenu && open) {
         sideMenu.style.left = 0
         posSideMenu = true
         btnSideMenu.textContent = '<'
@@ -174,10 +307,11 @@ function openSideMenu() {
 }
 
 // Evento de entrar em Tela Cheia
-const btnResize = document.getElementById('fullscreen-btn');
+const btnResize = document.getElementById('fullscreen-btn').addEventListener('click', resizeScreen);
 const icon = document.getElementById('fullscreen-icon');
 
-btnResize.addEventListener('click', () => {
+function resizeScreen() {
+
     if (!document.fullscreenElement) {
         document.documentElement.requestFullscreen();
         updateFullscreen(true);
@@ -185,11 +319,11 @@ btnResize.addEventListener('click', () => {
         document.exitFullscreen();
         updateFullscreen(false);
     }
-});
+}
 
 
 function updateFullscreen(isFullscreen) {
-    const controlers = document.querySelector('.controls')
+    const start = document.querySelectorAll('.hide')
     icon.innerHTML = isFullscreen
         ? `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
              <polyline points="15 9 21 9 21 3"></polyline>
@@ -205,12 +339,8 @@ function updateFullscreen(isFullscreen) {
            </svg>`;
 
     btnSideMenu.style.display = isFullscreen ? 'none' : 'block'
-    
-    if (isFullscreen) {
-        controlers.classList.add('hidden');
-        console.log('Entrou em tela cheia');
-    } else {
-        controlers.classList.remove('hidden');
-        console.log('Saiu de tela cheia');
-    }
+    start[0].style.display = isFullscreen ? 'none' : 'inline-block'
+    start[1].style.display = isFullscreen ? 'none' : 'inline-block'
 }
+
+

@@ -29,9 +29,11 @@ body {
 
 .side-menu {
     position: absolute;
-    background-color: #ccc;
+    background-color: #111;
+    border: 1px solid #fff;
+    border-left: 0;
     min-height: 90vh;
-    min-width: 40vw;
+    min-width: 700px;
     top: 5%;
     left: -100%;
     right: 100%;
@@ -43,10 +45,10 @@ body {
 
 .side-btn {
     position: absolute;
-    top: 0;
+    top: -1px;
     left: 100%;
     color: #fff;
-    background-color: #000;
+    background-color: #111;
     border: 1px solid #fff;
     border-left: 0;
     padding: 5px 10px;
@@ -56,21 +58,40 @@ body {
 
 .side-btn:hover {
     background-color: #6b6b6b44;
+    border: 0;
 }
 
 .side-menu h2 {
     text-align: center;
     padding: 20px 0px;
+    color: #fff;
+    text-shadow: 1px 2px 4px #cccccc82;
+}
+
+.setProgArea {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
 .side-menu .setProg {
     padding: 10px 20px;
 }
 
+.side-menu input[type="checkbox"] {
+    width: 15px;
+    height: 15px;
+}
+
 .side-menu .prog,
 .side-menu .temp {
     margin-left: 20px;
-    font-size: 15px;
+    font-size: 18px;
+    border-radius: 5px;
+    box-shadow: 0px 1px 5px #dddddd82;
+    background-color: #eee;
+    font-weight: bold;
 }
 
 .side-menu .prog {
@@ -84,24 +105,31 @@ body {
     padding: 5px;
 }
 
-.side-menu button:not(.side-btn){
-    padding: 5px 10px;
-    font-size: 15px;
+.side-menu .controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+button:not(.side-btn, #fullscreen-btn){
+    padding: 5px;
+    font-size: 18px;
     font-weight: bold;
     margin-left: 20px;
     cursor: pointer;
-}
-
-.save,
-.start,
-.stop {
     width: 100px;
     margin-top: 50px;
-    cursor: pointer;
+    border-radius: 5px;
 }
 
+button:not(.side-btn, #fullscreen-btn):hover {
+    background-color: #cccccc50;
+    color: #fff;
+}
+
+
 .hidden {
-    display: none;
+   display: hidden;
 }
 
 .header {
