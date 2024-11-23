@@ -100,6 +100,10 @@ body {
     cursor: pointer;
 }
 
+.hidden {
+    display: none;
+}
+
 .header {
     display: flex;
     justify-content: center;
@@ -155,4 +159,36 @@ footer {
     margin-top: 20px;
     color: #FFF;
     font-size: 13px;
+}
+
+@keyframes blinkBar {
+    0% {
+        background-color: yellow;
+    }
+    50% {
+        background-color: red;
+    }
+    100% {
+        background-color: yellow;
+    }
+}
+
+.blink-bar {
+    animation: blinkBar 1s infinite;
+}
+
+@keyframes blinkText {
+    0% {
+        color: red;
+    }
+    50% {
+        color: white;
+    }
+    100% {
+        color: red;
+    }
+}
+
+.blink-text {
+    animation: blinkText 0.5s infinite;
 }
