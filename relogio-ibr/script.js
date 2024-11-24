@@ -192,8 +192,8 @@ function start() {
                 next.textContent = 'FIM'
             }
 
-            const tempoAtual = 0.05 * 60
-            //const tempoAtual = allProgs[1][index] * 60
+            // const tempoAtual = 0.05 * 60
+            const tempoAtual = allProgs[1][index] * 60
 
             startContdown(tempoAtual)
 
