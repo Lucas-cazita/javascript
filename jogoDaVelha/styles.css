@@ -1,0 +1,47 @@
+* {
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+}
+
+body {
+    background-color: #333;
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+h1 {
+    color: #fff;
+    font-size: 40px;
+}
+
+.tabuleiro {
+    margin: 30px 0px;
+    
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    
+    
+}
+
+.tabuleiro .quadrado {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1px;
+}
+
+.tabuleiro .quadrado #qd1 {
+    border:;
+}
+
+.tabuleiro .quadradoIn {
+    margin: 1px;
+    background-color: #000;
+    height: 120px;
+    width: 120px;
+}
