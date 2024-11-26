@@ -6,6 +6,7 @@ function setHour() {
     let hour = now.getHours()
     let minutes = now.getMinutes()
     let seconds = now.getSeconds()
+    let day = now.getDate()
 
     digitalElement.innerHTML = `${fixedZero(hour)}:${fixedZero(minutes)}:${fixedZero(seconds)}`
 
@@ -153,12 +154,15 @@ function alterElementsList(action, setProg) {
         console.log('Impossível identificar operação')
     }
 }
+
+
+
+
 // Salvar Progamações
 let allProgs = [[], []];
 function save() {
     const allSetProgs = document.getElementsByClassName('setProg')
-    let index = 1
-
+    
     allProgs= [[], []]
     for (let prog of allSetProgs) {
         let newProg = prog.querySelector('.prog').value  
@@ -166,11 +170,15 @@ function save() {
         allProgs[0].push(newProg)
         allProgs[1].push(newTemp)
     } 
+
+    console.log('save() -> todas as programações: ', allProgs)
 }
 
 save()
 let runCount = true
-const timers = { interval: null };
+const timers = { interval: null }
+const timeout = { interval: null }
+
 // Inicia a Progamação
 function start() {
     openSideMenu()
@@ -182,7 +190,7 @@ function start() {
     runCount = true
 
     function atualizaProgramação () {
-        if (!runCount) return
+        if (!runCount) return console.log('runCount= ', runCount)
 
         if (index < allProgs[0].length) {
             h1.textContent = allProgs[0][index].toUpperCase()
@@ -193,18 +201,30 @@ function start() {
             }
 
             // const tempoAtual = 0.05 * 60
-            const tempoAtual = allProgs[1][index] * 60
+            const tempoAtual = allProgs[1][index] * 60  // converte minutos para segundos
 
             startContdown(tempoAtual)
 
+            console.log('atualizaProgramacao= tempoAtual: ', tempoAtual, 'runCount: ', runCount)
+
             index++
-            setTimeout( () => {
-                if (runCount) atualizaProgramação()
+            console.log('index++ de atualizaProgamacao: ', index)
+
+            timeout.interval = setTimeout( () => {
+                if (runCount) {
+                    console.log('start setTimeout= tempoAtual: ', tempoAtual, ', runCount: ', runCount)
+                    atualizaProgramação()
+                }
             }, tempoAtual * 1000)
+            console.log('atualizaProgramacao timeout= ', timeout.interval)
         } else {
             stop()
         }
     }
+    
+    console.log('start() timeout= ', timeout.interval)
+    clearTimeout(timeout.interval)
+    console.log('start().after timeout= ', timeout.interval)
 
     atualizaProgramação()
 }
@@ -216,7 +236,6 @@ function startContdown(durationInSeconds) {
     let timeRemaining = durationInSeconds
 
     const totalDuration = durationInSeconds
-
 
     function formatTime(seconds) {
         const minutes = Math.floor(seconds / 60);
@@ -235,28 +254,31 @@ function startContdown(durationInSeconds) {
             progressBar.style.width = `${percentage}%`;
             progressBar.style.height = `100%`;
 
-
             // Calcula a cor (verde -> vermelho)
             const red = Math.min(255, Math.floor((1 - timeRemaining / totalDuration) * 255));
             const green = Math.min(255, Math.floor((timeRemaining / totalDuration) * 255));
             progressBar.style.backgroundColor = `rgb(${red}, ${green}, 0)`;
 
-             // Quando o tempo for menor ou igual a 2 minutos, piscar a barra e os números
-            if (timeRemaining <= 120) {
-                countdown.style.color = 'red';
-                
-                if (timeRemaining <= 30) {
-                    progressBar.classList.add('blink-bar');
-                    countdown.classList.add('blink-text');
-                }
-            } else {
+            // Altera a estilização da progressBar e do countdown
+            if (timeRemaining < 1) {  // Remove os efeitos
                 progressBar.classList.remove('blink-bar');
                 countdown.classList.remove('blink-text');
                 countdown.style.color = 'white';
-            }
+
+             } else if (timeRemaining <= 30) {  // Pisca a progresBar e o contdown
+                progressBar.classList.add('blink-bar');
+                countdown.classList.add('blink-text');
+                
+             } else if (timeRemaining <= 120) {
+                countdown.style.color = 'red';  // Muda o texto do countdown para vermelho
+            } 
 
             timeRemaining--;
+            
         } else {
+            console.log('timeRemaining: ', timeRemaining)
+            console.log('runCount: ', runCount)
+            console.log('timers: ', timers)
             countdown.textContent = '00:00'
             clearInterval(timers.interval)
             stop()
@@ -264,12 +286,18 @@ function startContdown(durationInSeconds) {
     }
 
     clearInterval(timers.interval); // Garante que não haja múltiplos intervalos ativos
-    timers.interval = setInterval(updateCountdown, 1000); // Armazena no objeto
+    timers.interval = setInterval(updateCountdown, 1000); // Cria um novo intervalo
     updateCountdown(); // Atualiza imediatamente a primeira vez
 }
 
 function stop() {
-    clearInterval(timers.interval); // Acessa o timer pelo objeto
+    console.log('stop()')
+    console.log('timers: ', timers.interval, 'timeout: ', timeout.interval)
+
+    clearInterval(timers.interval)  // Acessa o timer pelo objeto e encerra o intervalo
+    clearTimeout(timeout.interval)  // Acessa o timeout pelo objeto e encerra a contagem
+
+
     const progressBar = document.querySelector('.progressBar')
     const h1 = document.querySelector('h1')
     const next = document.querySelector('.next')
@@ -283,9 +311,9 @@ function stop() {
     countdown.classList.remove('blink-text');
     countdown.style.color = 'white';
 
-
-
     runCount = false
+
+    save()
 }
 
 // Evento abrir side menu
