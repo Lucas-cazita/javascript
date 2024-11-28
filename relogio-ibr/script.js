@@ -337,6 +337,11 @@ function openSideMenu(open=false) {
 // Evento de entrar em Tela Cheia
 const btnResize = document.getElementById('fullscreen-btn').addEventListener('click', resizeScreen);
 const icon = document.getElementById('fullscreen-icon');
+document.body.addEventListener('keyup', (event) => {
+    if(event.code.toLowerCase() === 'esc') {
+        updateFullscreen(false)
+    }
+})
 
 function resizeScreen() {
 
