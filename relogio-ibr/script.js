@@ -161,6 +161,7 @@ function alterElementsList(action, setProg) {
 // Salvar Progamações
 let allProgs = [[], []];
 function save() {
+    let res = 0;
     const allSetProgs = document.getElementsByClassName('setProg')
     
     allProgs= [[], []]
@@ -171,6 +172,10 @@ function save() {
         allProgs[1].push(newTemp)
     } 
 
+    for(let i=0; i<allProgs[1].length;i++) {
+        res += parseInt(allProgs[1][i])
+    }
+    document.querySelector('.res span').innerHTML = res
     console.log('save() -> todas as programações: ', allProgs)
 }
 
