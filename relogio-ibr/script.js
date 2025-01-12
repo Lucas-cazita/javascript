@@ -189,7 +189,7 @@ function start() {
     openSideMenu()
     resizeScreen()
     const h1 = document.querySelector('h1')
-    const next = document.querySelector('.next')
+    const next = document.querySelector('.nextProg')
 
     let index = 0
     runCount = true
