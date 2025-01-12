@@ -232,6 +232,8 @@ function start() {
     console.log('start().after timeout= ', timeout.interval)
 
     atualizaProgramação()
+
+    document.getElementById('nextProg').onclick = atualizaProgramação;
 }
 
 // Inicia o Timer
