@@ -233,7 +233,7 @@ function start() {
 
     atualizaProgramação()
 
-    document.getElementById('nextProg').onclick = atualizaProgramação;
+    document.getElementById('nextProg').onclick = atualizaProgramação();
 }
 
 // Inicia o Timer
